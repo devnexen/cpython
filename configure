@@ -3332,6 +3332,7 @@ then
 	linux*) MACHDEP="linux";;
 	cygwin*) MACHDEP="cygwin";;
 	darwin*) MACHDEP="darwin";;
+	haiku*) MACHDEP="haiku";;
 	'')	MACHDEP="unknown";;
     esac
 fi
@@ -3453,6 +3454,17 @@ $as_echo "#define _BSD_SOURCE 1" >>confdefs.h
   # chroot() and other functions
   hp*|HP*)
     define_xopen_source=no
+    ;;
+
+  Haiku/*|HAIKU*)
+  # On Haiku, mainly to enable *pty functions and
+  # also setting _SC_TTY_NAME_MAX to its Haiku counterpart.
+
+$as_echo "#define _BSD_SOURCE 1" >>confdefs.h
+
+
+$as_echo "#define _SC_TTY_NAME_MAX TTY_NAME_MAX" >>confdefs.h
+
     ;;
 
 esac

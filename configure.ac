@@ -420,6 +420,7 @@ then
 	linux*) MACHDEP="linux";;
 	cygwin*) MACHDEP="cygwin";;
 	darwin*) MACHDEP="darwin";;
+	haiku*) MACHDEP="haiku";;
 	'')	MACHDEP="unknown";;
     esac
 fi
@@ -537,6 +538,13 @@ case $ac_sys_system/$ac_sys_release in
   # chroot() and other functions
   hp*|HP*)
     define_xopen_source=no
+    ;;
+
+  Haiku/*|HAIKU*)
+  # On Haiku, mainly to enable *pty functions and
+  # also setting _SC_TTY_NAME_MAX to its Haiku counterpart.
+    AC_DEFINE(_BSD_SOURCE, 1, [Define on Haiku to activate all library features])
+    AC_DEFINE(_SC_TTY_NAME_MAX, TTY_NAME_MAX, [Define sysconf value equivalence])
     ;;
 
 esac
@@ -5438,7 +5446,7 @@ do
 done
 
 AC_SUBST(SRCDIRS)
-SRCDIRS="Parser Objects Python Modules Modules/_io Programs"
+SRCDIRS="Parser Parser/pegen Objects Python Modules Modules/_io Programs"
 AC_MSG_CHECKING(for build directories)
 for dir in $SRCDIRS; do
     if test ! -d $dir; then
